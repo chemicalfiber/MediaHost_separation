@@ -1,0 +1,11 @@
+{
+  "port": "8823",
+  "address": "0.0.0.0",
+  "self_domain": "op.otkteen.top",
+  "file_storage_path": "/Users/chemicalfiber",
+  "mongodb_config": {
+    "host": "192.168.2.6",
+    "port": "27017",
+    "database": "media_host"
+  }
+}
