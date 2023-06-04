@@ -24,8 +24,9 @@ func NotFound404(c *gin.Context, err error) {
 		"message": err.Error(),
 	})
 }
-func BadRequest400(c *gin.Context, errMessage string) {
-	c.JSON(http.StatusNotFound, gin.H{
-		"message": errMessage,
+func BadRequest400(c *gin.Context, errorMessage string, v interface{}) {
+	c.JSON(http.StatusBadRequest, gin.H{
+		"message": errorMessage,
+		"data":    v,
 	})
 }

@@ -15,8 +15,8 @@ func main() {
 	// 创建gin主路由
 	engine := gin.Default()
 
-	// CSRF中间件，允许跨域
-	engine.Use(middleware.CORS)
+	engine.Use(middleware.CORS) // CSRF中间件，允许跨域
+	//engine.Use(middleware.CheckJWT) // JWT token验证中间件
 
 	// 路由组注册
 	routers.MediaRouteInit(engine)

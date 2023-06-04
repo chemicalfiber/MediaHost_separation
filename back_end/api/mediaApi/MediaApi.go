@@ -18,7 +18,7 @@ func GetImagesByUserId(c *gin.Context) {
 
 // 接收上传文件
 func UploadHandler(c *gin.Context) {
-
+	// 需要提供token才允许上传文件
 }
 
 // TODO：提供文件下载（尚未被其他路由指定）

@@ -19,7 +19,7 @@ func UserRouteInit(engine *gin.Engine) {
 		//userGroup.GET("/checkLogin",handlers.CheckLogin)
 
 		// 注销
-		userGroup.GET("/logout", userApi.Logout)
+		//userGroup.GET("/logout", userApi.Logout)
 
 		// 注册相关
 		//userGroup.GET("/register", handlers.ToRegisterPage)

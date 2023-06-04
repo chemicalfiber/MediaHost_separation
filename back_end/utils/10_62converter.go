@@ -8,7 +8,7 @@ import (
 var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 // 十进制转换成62进制
-func Encode(num int64) string {
+func Encode10to62(num int64) string {
 	bytes := []byte{}
 	for num > 0 {
 		bytes = append(bytes, chars[num%62])
@@ -19,7 +19,7 @@ func Encode(num int64) string {
 }
 
 // 62进制转换回十进制
-func Decode(str string) int64 {
+func Decode62to10(str string) int64 {
 	var num int64
 	n := len(str)
 	for i := 0; i < n; i++ {
