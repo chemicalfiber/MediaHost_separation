@@ -13,5 +13,7 @@ func ApiRouteInit(engine *gin.Engine) {
 		apiGroup.GET("/verifyCode.png", api.GenerateVerifyCode)
 		// 查询用户名是否可用
 		apiGroup.GET("/checkName", userApi.CheckUserName)
+		// 检查token是否有效
+		apiGroup.GET("/checkToken", userApi.CheckToken)
 	}
 }

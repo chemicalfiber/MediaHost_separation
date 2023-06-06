@@ -12,7 +12,7 @@ import (
 与用户相关的API
 */
 
-// 注册
+// 注册	// TODO：返回一些信息，让前端的catch捕捉并显示错误
 func Register(c *gin.Context) {
 	username := c.PostForm("username")
 	nickname := c.PostForm("nickname")
@@ -131,4 +131,18 @@ func HomePage(c *gin.Context) {
 // TODO：根据UUID查询用户（尚未被其他路由指定）
 func FindById(c *gin.Context) {
 
+}
+
+// 检查token是否有效
+func CheckToken(c *gin.Context) {
+	tokenString := c.Query("token")
+	_, err := utils.DecodeToken(tokenString)
+
+	// token验证不通过
+	if err != nil {
+		utils.BadRequest400(c, "token失效！", nil)
+		return
+	}
+	// token验证通过
+	utils.Ok200(c, nil)
 }
