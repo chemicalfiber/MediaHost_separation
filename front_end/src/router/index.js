@@ -3,10 +3,15 @@ import VueRouter from "vue-router";
 
 import Login from "@/pages/Login";
 import Upload from "@/pages/Upload";
+import Register from "@/pages/Rgister"
 import axios from "axios";
 
 const router = new VueRouter({
     routes:[
+        {
+            path:"/register",
+            component:Register
+        },
         {
             path:"/login",
             component:Login

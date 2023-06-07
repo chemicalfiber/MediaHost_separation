@@ -1,6 +1,10 @@
 <template>
   <v-form ref="loginForm" @submit="submitForm">
-
+  <v-container>
+    <v-row class="justify-center">
+      <h1>登录</h1>
+    </v-row>
+  </v-container>
     <v-container>
       <v-row class="justify-center">
         <v-col
@@ -25,6 +29,7 @@
         <v-col
             cols="4">
           <v-text-field
+              @keyup.enter="submitForm"
               prepend-icon="mdi-lock"
               hide-details="auto"
               label="密码"
@@ -55,12 +60,18 @@
       </v-row>
     </v-container>
 
+    <v-container>
+      <v-row class="offset-4">
+        没有账户？<router-link to="/register">注册一个</router-link>
+      </v-row>
+    </v-container>
   </v-form>
+
 </template>
 
 <script>
 export default {
-  name: "login",
+  name: "Login",
   data() {
     return {
       username: "",

@@ -1,6 +1,15 @@
 <template>
   <v-form ref="registerForm" @submit="submitForm">
-
+    <v-container>
+      <v-row class="justify-center">
+        <h1>账户注册</h1>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-row class="offset-5" style="color: red">
+        {{formErrMessage}}
+      </v-row>
+    </v-container>
     <v-container>
       <v-row class="justify-center">
         <v-col
@@ -67,9 +76,10 @@
                   prepend-icon="mdi-lock-outline"
                   hide-details="auto"
                   label="确认密码"
-                  :value="passwordConfirm"
-                  v-model="passwordConfirm"
-                  :error-messages="errMessage.passwordConfirm"
+                  :type="'password'"
+                  :value="confirmPassword"
+                  v-model="confirmPassword"
+                  :error-messages="errMessage.confirmPassword"
                   :rules="[rules.max,rules.min]"
               >
 
@@ -88,30 +98,36 @@
               class="mr-4"
               @click="submitForm"
           >
-            登录
+            注册
           </v-btn>
         </v-col>
       </v-row>
     </v-container>
 
+    <v-container>
+      <v-row class="offset-4">
+        我想去<router-link to="/login">登录</router-link>
+      </v-row>
+    </v-container>
   </v-form>
 </template>
 
 <script>
 export default {
-  name: "register",
+  name: "Register",
   data() {
     return {
       username: "",
-      // nickname: "",
+      nickname: "",
       password: "",
-      // passwordConfirm: "",
+      confirmPassword: "",
       errMessage: {
         username: "",
-        // nickname: "",
+        nickname: "",
         password: "",
-        // passwordConfirm: "",
+        confirmPassword: "",
       },
+      formErrMessage:"",  // 在表单头部的错误信息
       // 表单校验规则
       rules: {
         required: value => !!value || '此项为必填项！',
@@ -129,10 +145,12 @@ export default {
   methods: {
     submitForm() {
       // console.log(this.$refs.loginForm.validate());
-      if (this.$refs.loginForm.validate()){
+      if (this.$refs.registerForm.validate()){
         let formData = new FormData();
         formData.append("username",this.username)
         formData.append("password",this.password)
+        formData.append("nickname",this.nickname)
+        formData.append("confirmPassword",this.confirmPassword)
         this.$axios.post(
             "/user/register",
             formData,{
@@ -148,6 +166,7 @@ export default {
         }).catch(error=>{
           // TODO：将后端传递过来的错误信息重新渲染到该组件上
           console.log(error);
+          this.formErrMessage = error.response.data.message;
         })
       }
     }
