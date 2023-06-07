@@ -12,11 +12,12 @@ func SaveFileInfo(media models.Media) (interface{}, error) {
 	collection := utils.MongoDB.Collection("media")
 	// 向数据库插入数据
 	insertResult, err := collection.InsertOne(context.Background(), bson.M{"_id": media.Id,
-		"name":            media.Name,
-		"upload_date":     media.UploadDate,
-		"uploader_id":     media.UploaderId,
-		"type":            media.Type,
-		"local_disk_path": media.LocalDiskPath,
+		"name":        media.Name,
+		"upload_date": media.UploadDate,
+		"uploader_id": media.UploaderId,
+		"type":        media.Type,
+		//"local_disk_path": media.LocalDiskPath,
+		"grid_fs_key": media.GridFSKey,
 	})
 
 	// 当插入出现问题时，返回nil，在调用者处判断返回值是否为nil即可知晓插入是否成功
@@ -43,7 +44,7 @@ func GetFileInfo(id string) (models.Media, error) {
 }
 
 // TODO：通过用户ID查询该用户的指定类型的媒体文件信息
-func GetFileByUserId(userId string, fileType string) ([]models.Media, error) {
+func GetFilesByUserId(userId string, fileType string) ([]models.Media, error) {
 	var medias []models.Media
 
 	collection := utils.MongoDB.Collection("media")
