@@ -135,7 +135,7 @@ func FindById(c *gin.Context) {
 
 // 检查token是否有效
 func CheckToken(c *gin.Context) {
-	tokenString := c.Query("token")
+	tokenString := c.Query("x-token")
 	_, err := utils.DecodeToken(tokenString)
 
 	// token验证不通过

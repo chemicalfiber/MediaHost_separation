@@ -7,62 +7,60 @@ import Register from "@/pages/Rgister"
 import axios from "axios";
 
 const router = new VueRouter({
-    routes:[
+    routes: [
         {
-            path:"/register",
-            component:Register
+            path: "/register",
+            component: Register
         },
         {
-            path:"/login",
-            component:Login
+            path: "/login",
+            component: Login
         },
         {
-            path:"/upload",
-            component:Upload
+            path: "/upload",
+            component: Upload
         }
     ]
 });
 
 // 全局前置路由守卫，在页面初始化和路由跳转之前被调用
-router.beforeEach((to,from,next) => {
+router.beforeEach((to, from, next) => {
     // console.log("前置路由守卫被触发")
     // console.log("from：");
     // console.log(from)
     // console.log("to：");
     // console.log(to);
 
-    if(to.path.startsWith("/login")){
-        localStorage.removeItem("x-token");
-        next()
-    }else{
-        let x_token = localStorage.getItem("x-token");
-        if (x_token !== null){
-            // 有token，验证token
-            axios.get(
-                "/api/checkToken",
-                {
-                    params:{
-                        "token":x_token
-                    }
+    // if(to.path.startsWith("/login")){
+    //     localStorage.removeItem("x-token");
+    //     next()
+    // }else{
+    let x_token = localStorage.getItem("x-token");
+    if (x_token !== null) {
+        // 有token，验证token
+        axios.get(
+            "/api/checkToken",
+            {
+                params: {
+                    "x-token": x_token
                 }
-            ).then(resp =>{
-                // console.log(resp)
-                if (resp.data.message === "OK"){
-                    next()
-                }else {
-                    next("/login")
-                }
-            }).catch(error => {
-                console.log(error)
+            }
+        ).then(resp => {
+            // console.log(resp)
+            if (resp.data.message === "OK") {
+                next()
+            } else {
                 next("/login")
-            })
-        }
+            }
+        }).catch(error => {
+            console.log(error)
+            next("/login")
+        })
     }
+    // }
 
 
     next();  // 放行请求
 })
-
-
 
 export default router

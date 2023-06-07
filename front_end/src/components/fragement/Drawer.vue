@@ -7,12 +7,12 @@
     >
       <v-list>
 
-        <v-list-item link v-if="isLogin">
+        <v-list-item link v-if="isLogin" @click="logout">
           <v-list-item-content>
             <v-list-item-title class="text-h6">
-              化学纤维
+              {{ nickname }}
             </v-list-item-title>
-            <v-list-item-subtitle>化学纤维@hxxw.com</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ username }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
 
@@ -60,12 +60,21 @@ export default {
   name: "Drawer",
   data() {
     return {
-      isLogin: false
+      isLogin: false,
+      username:localStorage.getItem('username'),
+      nickname:localStorage.getItem('nickname'),
     }
   },
   mounted() {
     // TODO：使用vuex对isLogin进行管理
     this.isLogin = localStorage.getItem("x-token");
+  },
+  methods:{
+    logout(){
+      localStorage.clear();
+      location.reload();
+      // this.$router.push("/login");
+    }
   }
 }
 </script>

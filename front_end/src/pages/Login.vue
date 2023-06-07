@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import {Base64} from 'js-base64';
 export default {
   name: "Login",
   data() {
@@ -115,14 +116,31 @@ export default {
         ).then(resp => {
           // console.log(resp)
           if(resp.data.message === "OK"){
-            localStorage.setItem("x-token",resp.data.data.token)  // 将token存好
-            this.$router.push("/upload")  // 登录成功，走你～
+            const token = resp.data.data.token;
+            localStorage.setItem("x-token",token)  // 将token存好
+            // console.log(token.indexOf('.'));
+            // console.log(token.lastIndexOf('.'));
+            // 解析token中的载体
+            const payload = token.substring(token.indexOf('.')+1, token.lastIndexOf('.'));
+            console.log(payload);
+            const payloadDecodeStr = Base64.decode(payload);
+            let payloadObj = JSON.parse(payloadDecodeStr);
+
+            console.log(payloadObj)
+
+            // 存放载体的关键信息
+            localStorage.setItem('nickname',payloadObj.nickname);
+            localStorage.setItem('username',payloadObj.username);
+            localStorage.setItem('user_id',payloadObj.user_id)
+
+            location.href = '/';  // 登录成功，刷新页面让显示用户信息相关组件重新渲染
           }
         }).catch(error=>{
-          // console.log(error);
+          console.log(error);
           // console.log(this);
           this.errMessage.username = error.response.data.message;
           this.errMessage.password = error.response.data.message;
+          this.password = '';
         })
       }
     }

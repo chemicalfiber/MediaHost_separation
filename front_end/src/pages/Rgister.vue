@@ -6,7 +6,7 @@
       </v-row>
     </v-container>
     <v-container>
-      <v-row class="offset-5" style="color: red">
+      <v-row class="offset-4" style="color: red">
         {{formErrMessage}}
       </v-row>
     </v-container>
@@ -81,6 +81,7 @@
                   v-model="confirmPassword"
                   :error-messages="errMessage.confirmPassword"
                   :rules="[rules.max,rules.min]"
+                  @keyup.enter="submitForm"
               >
 
               </v-text-field>

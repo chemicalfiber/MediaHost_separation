@@ -16,6 +16,7 @@ type MyCustomClaims struct {
 	Username string `json:"username"`
 	Nickname string `json:"nickname"`
 	Usertype string `json:"usertype"`
+	UserId   string `json:"user_id"`
 	// 实现了jwt Claims接口的结构体
 	jwt.StandardClaims
 }
@@ -29,6 +30,7 @@ func GenerateToken(user models.User) (string, error) {
 		user.Username,
 		user.Nickname,
 		user.Usertype,
+		user.ID,
 		jwt.StandardClaims{
 			//NotBefore: time.Now().UnixNano(),
 			ExpiresAt: time.Now().Unix() + 60*60*24*7, // 过期时间，为unix时间，往后7天
