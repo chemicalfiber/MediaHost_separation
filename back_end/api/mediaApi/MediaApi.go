@@ -25,12 +25,22 @@ func GetImagesByUserId(c *gin.Context) {
 // 接收上传文件
 func UploadHandler(c *gin.Context) {
 	// 需要提供token才允许上传文件
-	header := c.GetHeader("x-token")
-	userTokenString := c.PostForm("x-token")
-	if header == "" && userTokenString == "" {
+	userTokenString := c.GetHeader("x-token")
+	if userTokenString == "" {
+		userTokenString = c.PostForm("x-token")
+	}
+
+	if userTokenString == "" {
 		utils.BadRequest400(c, "未传递token，上传被拒绝", nil)
 		return
 	}
+
+	token, err := utils.DecodeToken(userTokenString)
+	if err != nil {
+		utils.BadRequest400(c, err.Error(), nil)
+	}
+	userId := token.Claims.(*utils.MyCustomClaims).UserId
+	username := token.Claims.(*utils.MyCustomClaims).Username
 
 	file, err := c.FormFile("file")
 	if err != nil {
@@ -39,7 +49,7 @@ func UploadHandler(c *gin.Context) {
 
 	// 获取前端传过来的文件MIME_TYPE，在后续操作该文件的字段
 	contentType := file.Header["Content-Type"]
-	fmt.Println(contentType)
+	fmt.Println("Content-Type", contentType)
 	var fileType string
 	if strings.Contains(contentType[0], "image") {
 		fileType = "image"
@@ -51,8 +61,11 @@ func UploadHandler(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(fileType)
+	fmt.Println("文件类型：", fileType)
+	fmt.Println("上传者ID：", userId)
+	fmt.Println("上传者昵称：", username)
 
+	fmt.Println("---------------")
 }
 
 // TODO：提供文件下载（尚未被其他路由指定）

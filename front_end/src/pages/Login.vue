@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="loginForm" @submit="submitForm">
+  <v-form ref="loginForm" @submit="submitForm" class="form">
   <v-container>
     <v-row class="justify-center">
       <h1>登录</h1>
@@ -131,7 +131,7 @@ export default {
             // 存放载体的关键信息
             localStorage.setItem('nickname',payloadObj.nickname);
             localStorage.setItem('username',payloadObj.username);
-            localStorage.setItem('user_id',payloadObj.user_id)
+            localStorage.setItem('user_id',payloadObj.user_id);
 
             location.href = '/';  // 登录成功，刷新页面让显示用户信息相关组件重新渲染
           }
@@ -149,5 +149,8 @@ export default {
 </script>
 
 <style scoped>
-
+.form{
+  position: relative;
+  top: 200px;
+}
 </style>

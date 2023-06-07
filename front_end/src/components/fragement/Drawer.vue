@@ -32,7 +32,7 @@
           nav
           dense
       >
-        <v-list-item link>
+        <v-list-item link to="/">
           <v-list-item-icon>
             <v-icon color="blue darken-2">mdi-cloud-upload</v-icon>
           </v-list-item-icon>

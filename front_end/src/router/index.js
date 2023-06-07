@@ -17,7 +17,7 @@ const router = new VueRouter({
             component: Login
         },
         {
-            path: "/upload",
+            path: "/",
             component: Upload
         }
     ]
@@ -31,36 +31,32 @@ router.beforeEach((to, from, next) => {
     // console.log("to：");
     // console.log(to);
 
-    // if(to.path.startsWith("/login")){
-    //     localStorage.removeItem("x-token");
-    //     next()
-    // }else{
-    let x_token = localStorage.getItem("x-token");
-    if (x_token !== null) {
-        // 有token，验证token
-        axios.get(
-            "/api/checkToken",
-            {
-                params: {
-                    "x-token": x_token
+    if (to.path.startsWith("/login")) {
+        next()
+    } else {
+        let x_token = localStorage.getItem("x-token");
+        if (x_token !== null) {
+            // 有token，验证token
+            axios.get(
+                "/api/checkToken",
+                {
+                    params: {
+                        "x-token": x_token
+                    }
                 }
-            }
-        ).then(resp => {
-            // console.log(resp)
-            if (resp.data.message === "OK") {
-                next()
-            } else {
+            ).then(resp => {
+                // console.log(resp)
+                if (resp.data.message === "OK") {
+                    next()
+                } else {
+                    next("/login")
+                }
+            }).catch(error => {
+                console.log(error)
                 next("/login")
-            }
-        }).catch(error => {
-            console.log(error)
-            next("/login")
-        })
+            })
+        }
     }
-    // }
-
-
-    next();  // 放行请求
 })
 
 export default router

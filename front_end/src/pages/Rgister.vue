@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="registerForm" @submit="submitForm">
+  <v-form ref="registerForm" @submit="submitForm" class="form">
     <v-container>
       <v-row class="justify-center">
         <h1>账户注册</h1>
@@ -176,5 +176,8 @@ export default {
 </script>
 
 <style scoped>
-
+.form{
+  position: relative;
+  top: 150px;
+}
 </style>
