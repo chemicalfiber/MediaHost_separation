@@ -1,7 +1,7 @@
 {
   "port": "8823",
   "address": "0.0.0.0",
-  "self_domain": "http://127.0.0.1",
+  "self_domain": "http://10.35.48.32",
   "file_storage_path": "/Users/chemicalfiber",
   "mongodb_config": {
     "host": "192.168.2.6",

@@ -6,6 +6,8 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/gridfs"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // 将文件信息存储到数据库,TODO:重写这部分的逻辑，将文件存储到mongoDB
@@ -44,7 +46,7 @@ func GetFileInfo(id string) (models.Media, error) {
 	return media, nil
 }
 
-// TODO：通过用户ID查询该用户的指定类型的媒体文件信息
+// 通过用户ID查询该用户的指定类型的媒体文件信息
 func GetFilesByUserId(userId string, fileType string) ([]models.Media, error) {
 	var medias []models.Media
 
@@ -72,8 +74,33 @@ func GetFilesByUserId(userId string, fileType string) ([]models.Media, error) {
 	return medias, nil
 }
 
+// 根据ID删除文件
 func DeleteMediaById(id string) (int64, error) {
 	collection := utils.MongoDB.Collection("media")
+
+	// 先根据访问id查询到GridFS中对应的ID
+	info, err := GetFileInfo(id)
+	if err != nil {
+		return 0, err
+	}
+
+	// 创建数据库连接和存储桶
+	fsBucket, err := gridfs.NewBucket(
+		utils.MongoDB,
+		options.GridFSBucket().SetName("fs"),
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	// 删除GridFS中的文件
+	err = fsBucket.Delete(info.GridFSKey)
+	if err != nil {
+		return 0, err
+	}
+
+	// 删除文件记录
 	result, err := collection.DeleteOne(context.Background(), bson.M{
 		"_id": id,
 	})
