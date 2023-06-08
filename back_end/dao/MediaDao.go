@@ -71,3 +71,14 @@ func GetFilesByUserId(userId string, fileType string) ([]models.Media, error) {
 
 	return medias, nil
 }
+
+func DeleteMediaById(id string) (int64, error) {
+	collection := utils.MongoDB.Collection("media")
+	result, err := collection.DeleteOne(context.Background(), bson.M{
+		"_id": id,
+	})
+	if err != nil {
+		return 0, err
+	}
+	return result.DeletedCount, err
+}

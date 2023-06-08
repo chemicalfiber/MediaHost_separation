@@ -40,7 +40,11 @@
         </v-col>
       </v-row>
     </v-form>
-
+    <v-row >
+      <v-col cols="6">
+        <v-btn color="error" @click="deleteThis(fileInfo.info._id)">删除这个文件</v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </div>
 </template>
@@ -66,6 +70,15 @@ export default {
     }).catch(error => {
       console.log(error)
     })
+  },
+  methods:{
+    deleteThis(id){
+      console.log(id)
+      axios.get("/file/delete/"+id).then(response => {
+        console.log(response);
+        this.$router.push("/videos")
+      }).catch(error => console.log(error))
+    }
   }
 }
 </script>

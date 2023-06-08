@@ -12,7 +12,7 @@
             v-for="image in imageList"
             :key="image._id"
         >
-          <v-card max-width="600" max-height="340" :to='{path:"/images/"+image._id}'>
+          <v-card max-width="500" max-height="250" :to='{path:"/images/"+image._id}'>
             <v-img style="display: block" :src="image.link" :alt="image.name" max-width="500" max-height="250"/>
             <div>{{image.name}}</div>
           </v-card>

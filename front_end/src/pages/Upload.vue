@@ -38,7 +38,7 @@
 
       <v-container>
         <v-row class="justify-center">
-          <v-col cols="4">
+          <v-col cols="8">
             <!--          <div class="text-center mb-4">-->
             <!--            <v-btn-->
             <!--                color="primary"-->

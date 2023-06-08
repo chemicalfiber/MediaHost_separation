@@ -39,6 +39,13 @@
             文件访问链接：{{fileInfo.file_link}}
           </v-col>
         </v-row>
+
+        <v-row >
+          <v-col cols="6">
+            <v-btn color="error" @click="deleteThis(fileInfo.info._id)">删除这个文件</v-btn>
+          </v-col>
+        </v-row>
+
       </v-form>
 
     </v-container>
@@ -66,6 +73,15 @@ export default {
     }).catch(error => {
       console.log(error)
     })
+  },
+  methods:{
+    deleteThis(id){
+      console.log(id)
+      axios.get("/file/delete/"+id).then(response => {
+        console.log(response);
+        this.$router.push("/images")
+      }).catch(error => console.log(error))
+    }
   }
 }
 </script>

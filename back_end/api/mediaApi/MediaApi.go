@@ -252,3 +252,22 @@ func DownloadHandler(c *gin.Context) {
 		return
 	}
 }
+
+// 删除文件
+func DeleteMediaById(c *gin.Context) {
+	fileId := c.Param("id")
+	if fileId == "" {
+		utils.BadRequest400(c, "未传递文件ID", nil)
+		return
+	}
+
+	deleteCount, err := dao.DeleteMediaById(fileId)
+	if err != nil {
+		utils.InternalError500(c, err)
+		return
+	}
+
+	utils.Ok200(c, gin.H{
+		"deleteCount": deleteCount,
+	})
+}

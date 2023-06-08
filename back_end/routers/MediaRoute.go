@@ -13,6 +13,7 @@ func MediaRouteInit(engine *gin.Engine) {
 	{
 		mediaRouter.GET("/:id", mediaApi.GetMediaDetail)
 		mediaRouter.POST("/upload", mediaApi.UploadHandler)
+		mediaRouter.GET("/delete/:id", mediaApi.DeleteMediaById)
 		//mediaRouter.GET("/f/:id",mediaApi.DownloadHandler)
 	}
 }
