@@ -5,6 +5,9 @@ import Login from "@/pages/Login";
 import Upload from "@/pages/Upload";
 import Register from "@/pages/Rgister"
 import axios from "axios";
+import Video from "@/pages/video/Videos";
+import Images from "@/pages/image/Images";
+import Me from "@/pages/Me";
 
 const router = new VueRouter({
     routes: [
@@ -19,6 +22,18 @@ const router = new VueRouter({
         {
             path: "/",
             component: Upload
+        },
+        {
+            path:"/videos",
+            component:Video
+        },
+        {
+            path:"/images",
+            component:Images
+        },
+        {
+            path:"/me",
+            component:Me
         }
     ]
 });

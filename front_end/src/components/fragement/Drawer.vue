@@ -7,12 +7,12 @@
     >
       <v-list>
 
-        <v-list-item link v-if="isLogin" @click="logout">
+        <v-list-item link v-if="isLogin" to="/me">
           <v-list-item-content>
             <v-list-item-title class="text-h6">
               {{ nickname }}
             </v-list-item-title>
-            <v-list-item-subtitle>{{ username }}</v-list-item-subtitle>
+            <v-list-item-subtitle>点击进入个人中心</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
 
@@ -38,18 +38,24 @@
           </v-list-item-icon>
           <v-list-item-title>传文件</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/videos">
           <v-list-item-icon>
-            <v-icon color="brown">mdi-folder-play</v-icon>
+            <v-icon color="brown">mdi-multimedia</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>我的媒体</v-list-item-title>
+          <v-list-item-title>我的视频</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/images">
           <v-list-item-icon>
-            <v-icon color="green">mdi-account-circle</v-icon>
+            <v-icon color="brown">mdi-image</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>账户</v-list-item-title>
+          <v-list-item-title>我的图片</v-list-item-title>
         </v-list-item>
+<!--        <v-list-item link to="/me">-->
+<!--          <v-list-item-icon>-->
+<!--            <v-icon color="green">mdi-account-circle</v-icon>-->
+<!--          </v-list-item-icon>-->
+<!--          <v-list-item-title>个人中心</v-list-item-title>-->
+<!--        </v-list-item>-->
       </v-list>
     </v-navigation-drawer>
 
@@ -68,13 +74,6 @@ export default {
   mounted() {
     // TODO：使用vuex对isLogin进行管理
     this.isLogin = localStorage.getItem("x-token");
-  },
-  methods:{
-    logout(){
-      localStorage.clear();
-      location.reload();
-      // this.$router.push("/login");
-    }
   }
 }
 </script>

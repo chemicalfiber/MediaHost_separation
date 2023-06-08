@@ -165,7 +165,6 @@ export default {
             this.$router.push("/login")  // 登录成功，走你～
           }
         }).catch(error=>{
-          // TODO：将后端传递过来的错误信息重新渲染到该组件上
           console.log(error);
           this.formErrMessage = error.response.data.message;
         })

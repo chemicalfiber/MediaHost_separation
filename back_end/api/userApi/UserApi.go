@@ -12,7 +12,7 @@ import (
 与用户相关的API
 */
 
-// 注册	// TODO：返回一些信息，让前端的catch捕捉并显示错误
+// 注册
 func Register(c *gin.Context) {
 	username := c.PostForm("username")
 	nickname := c.PostForm("nickname")
@@ -83,6 +83,7 @@ func Login(c *gin.Context) {
 	token, err := utils.GenerateToken(user) // 生成JWT token
 	if err != nil {
 		utils.InternalError500(c, err)
+		return
 	}
 
 	utils.Ok200(c, gin.H{
@@ -92,7 +93,33 @@ func Login(c *gin.Context) {
 
 // 修改
 func Update(c *gin.Context) {
-	// 确认是修改当前用户，从token中取出用户id
+	id := c.PostForm("user_id")
+	username := c.PostForm("username")
+	nickname := c.PostForm("nickname")
+	password := c.PostForm("password")
+	confirmPassword := c.PostForm("confirmPassword")
+
+	// 检查前端传递过来的"密码"和"确认密码"是否相等
+	if confirmPassword != password {
+		utils.BadRequest400(c, "两次输入的密码不一致！", gin.H{
+			"username": username,
+			"nickname": nickname,
+		})
+		return
+	}
+
+	user := models.User{
+		ID:       id,
+		Username: username,
+		Nickname: nickname,
+		Password: password,
+	}
+
+	result := dao.UpdateUser(user)
+	if result != 0 && result != nil {
+		utils.Ok200(c, nil)
+	}
+
 }
 
 // 登出

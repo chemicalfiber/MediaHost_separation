@@ -73,17 +73,16 @@
 import {Base64} from 'js-base64';
 export default {
   name: "Login",
+  mounted() {
+    localStorage.clear();
+  },
   data() {
     return {
       username: "",
-      // nickname: "",
       password: "",
-      // passwordConfirm: "",
       errMessage: {
         username: "",
-        // nickname: "",
         password: "",
-        // passwordConfirm: "",
       },
       // 表单校验规则
       rules: {

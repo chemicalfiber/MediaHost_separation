@@ -1,60 +1,69 @@
 <template>
-  <v-form ref="uploadForm" @submit.prevent="upload" class="form">
+  <div>
     <v-container>
-      <v-row class="justify-center">
+      <v-row>
         <v-col cols="4">
-          <v-file-input
-              name="file"
-              show-size
-              truncate-length="25"
-              placeholder="选择一个图片或视频..."
-              :rules="[rules.required]"
-              accept="image/*,video/*"
-          ></v-file-input>
+          <h1>上传文件</h1>
         </v-col>
       </v-row>
     </v-container>
+    <v-form ref="uploadForm" @submit.prevent="upload" class="form">
+      <v-container>
+        <v-row class="justify-center">
+          <v-col cols="4">
+            <v-file-input
+                name="file"
+                show-size
+                truncate-length="25"
+                placeholder="选择一个图片或视频..."
+                :rules="[rules.required]"
+                accept="image/*,video/*"
+            ></v-file-input>
+          </v-col>
+        </v-row>
+      </v-container>
 
-    <v-container>
-      <v-row class="justify-center">
-        <v-col cols="4">
-          <v-btn
-              color="primary"
-              :type="'submit'">
-            <v-icon>mdi-cloud-upload</v-icon>
-            上传
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
+      <v-container>
+        <v-row class="justify-center">
+          <v-col cols="4">
+            <v-btn
+                color="primary"
+                :type="'submit'">
+              <v-icon>mdi-cloud-upload</v-icon>
+              上传
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
 
-    <v-container>
-      <v-row class="justify-center">
-        <v-col cols="4">
-<!--          <div class="text-center mb-4">-->
-<!--            <v-btn-->
-<!--                color="primary"-->
-<!--                @click="alert = !alert"-->
-<!--            >-->
-<!--              Toggle-->
-<!--            </v-btn>-->
-<!--          </div>-->
-          <v-alert
-              :value="alert"
-              type="success"
-              dark
-              border="top"
-              icon="check-circle"
-              transition="scale-transition"
-          >
-            上传完成<br>
-            文件访问链接：{{fileLink}}
-          </v-alert>
-        </v-col>
-      </v-row>
-    </v-container>
+      <v-container>
+        <v-row class="justify-center">
+          <v-col cols="4">
+            <!--          <div class="text-center mb-4">-->
+            <!--            <v-btn-->
+            <!--                color="primary"-->
+            <!--                @click="alert = !alert"-->
+            <!--            >-->
+            <!--              Toggle-->
+            <!--            </v-btn>-->
+            <!--          </div>-->
+            <v-alert
+                :value="alert"
+                type="success"
+                dark
+                border="top"
+                icon="check-circle"
+                transition="scale-transition"
+            >
+              上传完成<br>
+              文件访问链接：{{fileLink}}
+            </v-alert>
+          </v-col>
+        </v-row>
+      </v-container>
 
-  </v-form>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -107,6 +116,6 @@ export default {
 <style scoped>
 .form {
   position: relative;
-  top: 300px;
+  top: 200px;
 }
 </style>
