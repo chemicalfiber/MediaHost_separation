@@ -8,32 +8,61 @@ import axios from "axios";
 import Video from "@/pages/video/Videos";
 import Images from "@/pages/image/Images";
 import Me from "@/pages/Me";
+import Doc from "@/pages/Doc";
+import VideoDetail from "@/pages/video/VideoDetail";
+import ImageDetail from "@/pages/image/ImageDetail";
 
 const router = new VueRouter({
     routes: [
         {
             path: "/register",
-            component: Register
+            component: Register,
+            meta:{
+                title:"注册"
+            }
         },
         {
             path: "/login",
-            component: Login
+            component: Login,
+            meta:{
+                title:"登录"
+            }
         },
         {
             path: "/",
-            component: Upload
+            component: Upload,
+            meta:{
+                title:"上传"
+            }
         },
         {
             path:"/videos",
-            component:Video
+            component:Video,
+            meta:{
+                title:"视频列表"
+            }
         },
+        {path:"/videos/:id",component:VideoDetail,meta:{title:"视频详情"}},
         {
             path:"/images",
-            component:Images
+            component:Images,
+            meta:{
+                title:"图片列表"
+            }
         },
+        {path:"/images/:id",component:ImageDetail,meta:{title:"图片详情"}},
         {
             path:"/me",
-            component:Me
+            component:Me,
+            meta:{
+                title:"个人中心"
+            }
+        },{
+            path:"/doc",
+            component:Doc,
+            meta:{
+                title:"使用文档"
+            }
         }
     ]
 });
@@ -46,7 +75,10 @@ router.beforeEach((to, from, next) => {
     // console.log("to：");
     // console.log(to);
 
-    if (to.path.startsWith("/login")) {
+    if(to.meta.title){
+        document.title = to.meta.title;
+    }
+    if (to.path.startsWith("/login") || to.path.startsWith("/register")) {
         next()
     } else {
         let x_token = localStorage.getItem("x-token");

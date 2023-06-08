@@ -12,6 +12,7 @@ type Media struct {
 	UploadDate time.Time          `json:"upload_date" bson:"upload_date"` // 上传日期
 	UploaderId string             `json:"uploader_id" bson:"uploader_id"` // 上传者ID
 	Type       string             `json:"type" bson:"type"`               // 媒体类型，图片还是视频？ 这里是MIME type的参考 http://blog.haoji.me/mime-type.html
+	Link       string             `json:"link"`                           // 文件访问链接
 	GridFSKey  primitive.ObjectID `json:"grid_fs_key" bson:"grid_fs_key"` // 存储在GridFS中的ObjectId
 	//LocalDiskPath string    `json:"local_disk_path" bson:"local_disk_path"` // 存储在本地磁盘的路径
 }

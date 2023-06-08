@@ -21,12 +21,63 @@ import (
 
 // 获取指定用户上传的视频
 func GetVideosByUserId(c *gin.Context) {
+	userId := c.Param("userId")
+	if userId == "" {
+		utils.BadRequest400(c, "未提供用户API token", nil)
+		return
+	}
 
+	videos, err := dao.GetFilesByUserId(userId, "video")
+	if err != nil {
+		utils.BadRequest400(c, err.Error(), nil)
+		return
+	}
+
+	utils.Ok200(c, videos)
 }
 
 // 获取指定用户上传的图片
 func GetImagesByUserId(c *gin.Context) {
+	userId := c.Param("userId")
+	if userId == "" {
+		utils.BadRequest400(c, "未提供用户API token", nil)
+		return
+	}
 
+	images, err := dao.GetFilesByUserId(userId, "image")
+	if err != nil {
+		utils.BadRequest400(c, err.Error(), nil)
+		return
+	}
+
+	utils.Ok200(c, images)
+}
+
+// 获取文件详情
+func GetMediaDetail(c *gin.Context) {
+	fileId := c.Param("id")
+	//fmt.Println(fileId)
+	fileInfo, err := dao.GetFileInfo(fileId)
+	if err != nil {
+		utils.BadRequest400(c, "文件ID无效", nil)
+		return
+	}
+
+	user := dao.GetUserById(fileInfo.UploaderId)
+	if user.ID == "" {
+		utils.BadRequest400(c, "找不到对应用户", nil)
+		return
+	}
+	// 安全处理，屏蔽关键信息
+	fileInfo.GridFSKey = primitive.ObjectID{}
+	fileInfo.UploaderId = ""
+
+	//fmt.Println(info)
+	utils.Ok200(c, gin.H{
+		"upload_user": user.Nickname,
+		"info":        fileInfo,
+		"file_link":   utils.Config.SelfDomain + ":" + utils.Config.Port + "/f/" + fileInfo.Id,
+	})
 }
 
 // 接收上传文件
@@ -143,7 +194,7 @@ func UploadHandler(c *gin.Context) {
 	})
 }
 
-// TODO：提供文件下载（尚未被其他路由指定）
+// 提供文件下载（尚未被其他路由指定）
 func DownloadHandler(c *gin.Context) {
 	fileId := c.Param("id") // REST ful查询
 	if fileId == "" {

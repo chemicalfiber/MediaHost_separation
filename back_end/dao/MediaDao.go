@@ -5,6 +5,7 @@ import (
 	"MediaHost_separation/back_end/utils"
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // 将文件信息存储到数据库,TODO:重写这部分的逻辑，将文件存储到mongoDB
@@ -61,6 +62,10 @@ func GetFilesByUserId(userId string, fileType string) ([]models.Media, error) {
 		if err != nil {
 			continue
 		}
+		// 敏感信息保护
+		media.GridFSKey = primitive.ObjectID{}
+		media.UploaderId = ""
+		media.Link = utils.Config.SelfDomain + ":" + utils.Config.Port + "/f/" + media.Id
 		medias = append(medias, media)
 	}
 

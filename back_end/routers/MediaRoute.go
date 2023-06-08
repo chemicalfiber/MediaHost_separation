@@ -11,6 +11,7 @@ func MediaRouteInit(engine *gin.Engine) {
 	// TODO：使用一条404路由规则
 	//fileRouter.GET("/",handlers.ToFileUpload)
 	{
+		mediaRouter.GET("/:id", mediaApi.GetMediaDetail)
 		mediaRouter.POST("/upload", mediaApi.UploadHandler)
 		//mediaRouter.GET("/f/:id",mediaApi.DownloadHandler)
 	}

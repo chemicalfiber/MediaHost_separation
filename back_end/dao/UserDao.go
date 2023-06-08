@@ -82,3 +82,24 @@ func GetUserByUsername(username string) models.User {
 	}
 	return models.User{}
 }
+
+// 根据用户ID获取用户
+func GetUserById(userId string) models.User {
+	collection := utils.MongoDB.Collection("user")
+
+	var user models.User
+
+	// 转换string类型的ID为ObjectID
+	hex, err := primitive.ObjectIDFromHex(userId)
+	if err != nil {
+		return models.User{}
+	}
+
+	result := collection.FindOne(context.Background(), bson.M{"_id": hex})
+
+	err = result.Decode(&user)
+	if err == nil { // decode不发生错误，则说明数据库中有对应用户
+		return user
+	}
+	return models.User{}
+}

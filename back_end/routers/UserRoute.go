@@ -20,12 +20,14 @@ func UserRouteInit(engine *gin.Engine) {
 		userGroup.POST("/update", userApi.Update)
 
 		// "我的媒体"
-		userMediaGroup := userGroup.Group("/media")
-		userMediaGroup.GET("/", mediaApi.GetImagesByUserId) // 当访问「/user/media」下的子目录匹配不到路由时，就回落到这个路由
-		{
-			userMediaGroup.GET("/img", mediaApi.GetImagesByUserId)
-			userMediaGroup.GET("/video", mediaApi.GetVideosByUserId)
-		}
+		//userMediaGroup := userGroup.Group("/media")
+		//userMediaGroup.GET("/", mediaApi.GetImagesByUserId) // 当访问「/user/media」下的子目录匹配不到路由时，就回落到这个路由
+		//{
+		//	userMediaGroup.GET("/img", mediaApi.GetImagesByUserId)
+		//	userMediaGroup.GET("/video", mediaApi.GetVideosByUserId)
+		//}
+		userGroup.GET("/img/:userId", mediaApi.GetImagesByUserId)
+		userGroup.GET("/video/:userId", mediaApi.GetVideosByUserId)
 	}
 
 }
