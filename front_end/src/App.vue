@@ -17,6 +17,7 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld';
+import axios from "axios";
 import Drawer from "@/components/fragement/Drawer";
 import Login from "@/pages/Login";
 
@@ -33,7 +34,7 @@ export default {
     //
   }),
   mounted() {
-    this.$axios.get("/api/checkToken",{params:{"x-token":localStorage.getItem("x-token")}}).catch(error => {
+    axios.get("/api/checkToken",{params:{"x-token":localStorage.getItem("x-token")}}).catch(error => {
       this.$router.push("/login")
     })
   }

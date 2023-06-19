@@ -71,6 +71,7 @@
 
 <script>
 import {Base64} from 'js-base64';
+import axios from "axios";
 export default {
   name: "Login",
   mounted() {
@@ -105,7 +106,7 @@ export default {
         let formData = new FormData();
         formData.append("username",this.username)
         formData.append("password",this.password)
-        this.$axios.post(
+        axios.post(
             "/user/login",
             formData,{
               headers:{

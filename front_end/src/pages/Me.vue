@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Me",
   data() {
@@ -161,7 +162,7 @@ export default {
         formData.append("password",this.password)
         formData.append("nickname",this.nickname)
         formData.append("confirmPassword",this.confirmPassword)
-        this.$axios.post(
+        axios.post(
             "/user/update",
             formData,{
               headers:{

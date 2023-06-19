@@ -3,11 +3,12 @@ package routers
 import (
 	"MediaHost_separation/back_end/api/mediaApi"
 	"MediaHost_separation/back_end/api/userApi"
+	"MediaHost_separation/back_end/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func UserRouteInit(engine *gin.Engine) {
-	userGroup := engine.Group("/user")
+	userGroup := engine.Group("/user", middleware.CheckJWT)
 	//userGroup.GET("/", handlers.UserMainPage) // 当访问「/user」下的子目录匹配不到路由时，就回落到这个路由
 	{
 		// 登录相关
