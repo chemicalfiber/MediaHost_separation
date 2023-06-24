@@ -170,7 +170,7 @@ func UploadHandler(c *gin.Context) {
 	}
 	// 创建文件信息结构体，用于保存到数据库中
 	media := models.Media{
-		Id:         utils.Encode10to62(time.Now().UnixNano()),
+		Id:         utils.Encode10to62(time.Now().Unix()),
 		Name:       file.Filename,
 		UploadDate: parsedTime,
 		UploaderId: userId,                                   // uploader_id"是当前登录用户（session中）的id，或参数传递的ID，以登录用户的ID优先
@@ -188,7 +188,7 @@ func UploadHandler(c *gin.Context) {
 	}
 
 	utils.Ok200(c, gin.H{
-		"fileLink": utils.Config.SelfDomain + ":" + utils.Config.Port + "/f/" + insertId.(string),
+		"file_link": utils.Config.SelfDomain + ":" + utils.Config.Port + "/f/" + insertId.(string),
 		//"fileInfoKey": insertId,                                          // 文件信息id
 		//"fileKey":     uploadStream.FileID.(primitive.ObjectID).String(), // GridFS桶中的文件id
 	})

@@ -102,7 +102,7 @@ export default {
         ).then(resp => {
           console.log(resp)
           this.alert = true;
-          this.fileLink = resp.data.data.fileLink;
+          this.fileLink = resp.data.data.file_link;
         }).catch(error => {
           // console.log(error)
           console.log(error.response.data.message)

@@ -68,7 +68,6 @@ const router = new VueRouter({
 });
 
 // 全局前置路由守卫，在页面初始化和路由跳转之前被调用
-/*
 router.beforeEach((to, from, next) => {
     // console.log("前置路由守卫被触发")
     // console.log("from：");
@@ -106,6 +105,5 @@ router.beforeEach((to, from, next) => {
         }
     }
 })
- */
 
 export default router

@@ -7,7 +7,7 @@ import router from "@/router";
 import vuetify from './plugins/vuetify'
 
 import axios from 'axios'
-Vue.prototype.$axios = axios
+// Vue.prototype.$axios = axios
 axios.interceptors.request.use(
     config => {
       config.headers['x-token'] = localStorage.getItem("x-token");
